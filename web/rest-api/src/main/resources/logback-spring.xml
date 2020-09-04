@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+	<include resource="jp/afterfit/core/logging/config.xml" />
+	<include resource="jp/afterfit/core/logging/console-appender.xml" />
+	<include resource="jp/afterfit/core/logging/file-appender.xml" />
+
+	<springProfile name="default">
+		<include resource="jp/afterfit/core/logging/logback-default.xml" />
+	</springProfile>
+
+	<springProfile name="dev">
+		<include resource="jp/afterfit/core/logging/logback-dev.xml" />
+	</springProfile>
+
+	<springProfile name="prod">
+		<include resource="jp/afterfit/core/logging/logback-prod.xml" />
+	</springProfile>
+
+</configuration>
