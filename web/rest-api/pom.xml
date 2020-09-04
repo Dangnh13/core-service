@@ -33,12 +33,12 @@
         </dependency>
 
 
-        <!--&lt;!&ndash; Oauth2 module &ndash;&gt;
+        <!-- Oauth2 module -->
         <dependency>
             <groupId>jp.afterfit</groupId>
-            <artifactId>oauth2</artifactId>
+            <artifactId>oauth2-google</artifactId>
         </dependency>
--->
+
         <!-- swagger -->
         <dependency>
             <groupId>io.springfox</groupId>

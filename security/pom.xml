@@ -12,19 +12,13 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>oauth2</module>
+        <module>oauth2-google</module>
     </modules>
 
     <dependencies>
         <dependency>
             <groupId>jp.afterfit</groupId>
             <artifactId>framework</artifactId>
-        </dependency>
-        <!--Persistence dependencies-->
-        <dependency>
-            <groupId>jp.afterfit</groupId>
-            <artifactId>persistence</artifactId>
-            <version>${project.version}</version>
         </dependency>
     </dependencies>
 
