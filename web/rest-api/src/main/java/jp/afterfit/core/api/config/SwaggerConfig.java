@@ -1,10 +1,8 @@
 package jp.afterfit.core.api.config;
 
-import com.google.common.base.Predicate;
-import com.google.common.base.Predicates;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import springfox.documentation.RequestHandler;
+import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Contact;
@@ -19,24 +17,20 @@ import java.util.Collections;
 @EnableSwagger2
 public class SwaggerConfig {
 
-	@Bean
-	public Docket api() {
-		return new Docket(DocumentationType.SWAGGER_2)
-				.apiInfo(getApiInfo())
-				.tags(new Tag("ClientController", "List of apis electronic passport registration by client"))
-				.tags(new Tag("PersonnelController", "List of apis electronic passport in personnel side"))
-				.select()
-				.apis(apis())
-				.build();
-	}
+    @Bean
+    public Docket api() {
+        return new Docket(DocumentationType.SWAGGER_2)
+                .apiInfo(getApiInfo())
+                .tags(new Tag("UserController", "List of apis User"))
+                .select()
+                .apis(RequestHandlerSelectors.basePackage("jp.afterfit.core.api"))
+                .paths(PathSelectors.any())
+                .build();
+    }
 
-	private ApiInfo getApiInfo() {
-		return new ApiInfo("電子申請予約システムAPI仕様書", "API Documentations for the Rest API", "0.0.1-SNAPSHOT",
-				"urn:tos", new Contact("Ominext", "Not Available", "Not Available"), "Apache 2.0",
-				"http://www.apache.org/licenses/LICENSE-2.0", Collections.emptyList());
-	}
-
-	private Predicate<RequestHandler> apis() {
-		return Predicates.not(RequestHandlerSelectors.basePackage("org.springframework.boot"));
-	}
+    private ApiInfo getApiInfo() {
+        return new ApiInfo("Core service", "API Documentations for the Rest API", "0.0.1-SNAPSHOT",
+                "urn:tos", new Contact("AfterFit", "https://afterfit.co.jp", "Not Available"), "Apache 2.0",
+                "http://www.apache.org/licenses/LICENSE-2.0", Collections.emptyList());
+    }
 }

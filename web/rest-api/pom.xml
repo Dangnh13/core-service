@@ -32,24 +32,12 @@
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
 
-
         <!-- Oauth2 module -->
-        <dependency>
-            <groupId>jp.afterfit</groupId>
-            <artifactId>oauth2-google</artifactId>
-        </dependency>
+         <dependency>
+             <groupId>jp.afterfit</groupId>
+             <artifactId>oauth2-google</artifactId>
+         </dependency>
 
-        <!-- swagger -->
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-            <version>${springfox.swagger.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger-ui</artifactId>
-            <version>${springfox.swagger.version}</version>
-        </dependency>
 
     </dependencies>
 

@@ -28,13 +28,15 @@
         <maven.compiler.source>${java.version}</maven.compiler.source>
 
         <!-- spring -->
-        <springfox.swagger.version>2.9.2</springfox.swagger.version>
+        <springfox.boot.starter.version>3.0.0</springfox.boot.starter.version>
         <reactor.spring.version>1.0.1.RELEASE</reactor.spring.version>
 
         <!--Security-->
+        <oauth2.oidc.sdk.version>8.19</oauth2.oidc.sdk.version>
+        <reactor.spring.version>1.0.1.RELEASE</reactor.spring.version>
 
         <!-- Postgresql -->
-        <postgresql.version>42.2.9</postgresql.version>
+        <postgresql.version>42.2.16</postgresql.version>
 
         <!--Mybatis-->
         <mybatis.spring.boot.version>2.1.3</mybatis.spring.boot.version>

@@ -19,12 +19,12 @@ import javax.validation.Valid;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
-@Api(tags = "User controller")
+@Api(tags = "UserController")
 public class UserController extends AbstractBaseController {
 
     private final IUserService userService;
 
-    @PostMapping(value = Router.API.USER.SEARCH)
+    @PostMapping(value = "${endpoint.user.find}")
     public ResponseEntity<SearchUserResponse> search(@RequestBody @Valid SearchUserRequest request) {
         Page<jp.afterfit.core.domain.entity.generator.Users> page = userService.findUser(request.toDxo());
         return ResponseEntity.ok(new SearchUserResponse());

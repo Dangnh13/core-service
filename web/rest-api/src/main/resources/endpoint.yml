@@ -1,4 +1,3 @@
 endpoint:
-  test:
-    full: /test/full
-    send_mail: /test/send-mail
+  user:
+    find: /user/find

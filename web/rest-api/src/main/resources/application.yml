@@ -1,7 +1,7 @@
 server:
   port: ${PORT:9000}
   servlet:
-    context-path: /auth
+    context-path: /api
   http2:
     enabled: true
 
@@ -9,29 +9,14 @@ server:
 #                           Spring configuration
 #******************************************************************************/
 spring:
-  thymeleaf:
-    cache: false
-    prefix: classpath:/templates/
-    check-template: true
-    check-template-location: true
   messages:
-    basename: messages,errors,web-messages
+    basename: messages,errors,api-messages
     encoding: UTF-8
   servlet:
     multipart:
       enabled: true
       max-file-size: -1
       max-request-size: -1
-  mail:
-    host: smtp.gmail.com
-    port: 587
-    username: test.mail.core@gmail.com
-    password: testmail
-    protocol: smtp
-    properties.mail.smtp:
-      auth: false
-      starttls.enable: true
-      ssl.trust: smtp.gmail.com
   freemarker:
     charset: UTF-8
     content-type: text/html
@@ -49,6 +34,11 @@ spring:
       # Optimize max connection pool: amount = ((core_count * 2) + effective_spindle_count)
       maximum-pool-size: 10
 
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: https://www.googleapis.com/oauth2/v3/certs
 #*******************************************************************************
 #                           Config mybatis
 #******************************************************************************/
@@ -74,17 +64,3 @@ mybatis:
 pagehelper:
   auto-dialect: true
   support-methods-arguments: true
-
-# Actuator config
-management:
-  health:
-    mail:
-      enabled: false
-  endpoints:
-    web:
-      exposure:
-        include: info, health, metrics, mappings
-  metrics:
-    export:
-      atlas:
-        enabled: false

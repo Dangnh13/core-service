@@ -7,7 +7,9 @@ import jp.afterfit.core.domain.entity.generator.Users;
 import jp.afterfit.core.domain.entity.generator.UsersCriteria;
 import jp.afterfit.core.dto.common.base.DXO;
 import jp.afterfit.core.persistence.dao.generator.UsersMapper;
+import org.springframework.stereotype.Service;
 
+@Service
 public class UserServiceImpl implements IUserService {
 
     private final UsersMapper usersMapper;

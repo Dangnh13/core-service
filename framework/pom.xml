@@ -25,11 +25,13 @@
             <artifactId>dto</artifactId>
         </dependency>
 
+        <!-- swagger -->
         <dependency>
             <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-            <version>${springfox.swagger.version}</version>
+            <artifactId>springfox-boot-starter</artifactId>
+            <version>${springfox.boot.starter.version}</version>
         </dependency>
+
         <!-- apache commons -->
         <dependency>
             <groupId>commons-beanutils</groupId>

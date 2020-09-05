@@ -1,5 +1,8 @@
 package jp.afterfit.core.dto.common.user;
 
-public class SearchUserResponse {
+import lombok.Data;
 
+@Data
+public class SearchUserResponse {
+    private String username;
 }

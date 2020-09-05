@@ -13,10 +13,11 @@
     <name>dto</name>
 
     <dependencies>
+        <!-- swagger -->
         <dependency>
             <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-            <version>${springfox.swagger.version}</version>
+            <artifactId>springfox-boot-starter</artifactId>
+            <version>${springfox.boot.starter.version}</version>
         </dependency>
     </dependencies>
 </project>
