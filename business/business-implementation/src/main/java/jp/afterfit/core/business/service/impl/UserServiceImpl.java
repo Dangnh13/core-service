@@ -3,6 +3,8 @@ package jp.afterfit.core.business.service.impl;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import jp.afterfit.core.business.service.IUserService;
+import jp.afterfit.core.domain.entity.generator.Users;
+import jp.afterfit.core.domain.entity.generator.UsersCriteria;
 import jp.afterfit.core.dto.common.base.DXO;
 import jp.afterfit.core.persistence.dao.generator.UsersMapper;
 import org.springframework.stereotype.Service;
