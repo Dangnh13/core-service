@@ -20,10 +20,12 @@ import org.springframework.security.oauth2.core.DelegatingOAuth2TokenValidator;
 import org.springframework.security.oauth2.core.OAuth2TokenValidator;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.security.oauth2.jwt.JwtIssuerValidator;
 import org.springframework.security.oauth2.jwt.JwtTimestampValidator;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.oauth2.server.resource.web.HeaderBearerTokenResolver;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.web.reactive.function.client.WebClient;
 
 @EnableWebSecurity
@@ -39,10 +41,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         NimbusJwtDecoder jwtDecoder = NimbusJwtDecoder.withJwkSetUri(oAuth2ResourceServerProperties.getJwt().getJwkSetUri()).build();
         jwtDecoder.setClaimSetConverter(new ClaimSetAdapterConverter());
 
-        OAuth2TokenValidator<Jwt> audienceValidator = new AudienceValidator();
+        OAuth2TokenValidator<Jwt> timestampValidator = new JwtTimestampValidator();
+        OAuth2TokenValidator<Jwt> audienceValidator = new AudienceValidator(oAuth2ResourceServerProperties);
+        OAuth2TokenValidator<Jwt> issuerValidator = new JwtIssuerValidator("accounts.google.com");
+
         OAuth2TokenValidator<Jwt> withClockSkew = new DelegatingOAuth2TokenValidator<>(
-                new JwtTimestampValidator(),
-                audienceValidator);
+                timestampValidator,
+                audienceValidator,
+                issuerValidator);
 
         jwtDecoder.setJwtValidator(withClockSkew);
 
@@ -54,6 +60,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return WebClient.builder()
                 .filter(new AddHeaderExchangeFilter())
                 .build();
+    }
+
+    @Bean
+    public AuthenticationEntryPoint authenticationEntryPoint() {
+        return new PreAuthenticatedEntryPoint();
     }
 
     Converter<Jwt, AbstractAuthenticationToken> grantedAuthoritiesExtractor() {
@@ -91,6 +102,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                                         )
                                         .bearerTokenResolver(new HeaderBearerTokenResolver("id_token"))
+                                        .authenticationEntryPoint(authenticationEntryPoint())
+                    /*    .accessDeniedHandler(new AccessDeniedHandler() {
+                                            @Override
+                                            public void handle(HttpServletRequest request, HttpServletResponse response, org.springframework.security.access.AccessDeniedException accessDeniedException) throws IOException, ServletException {
+                                                System.out.println("I am here now!!!");
+                                            }
+                                        })*/
 
                 )
                 .sessionManagement(sessionManagement ->

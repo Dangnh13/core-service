@@ -40,6 +40,7 @@ public class CommonConstant {
 
         String YYYY_MM_DD_HH_MM = "yyyyMMddHHmm";
         String YYYY_MM_DD_HH_MM_SLASH = "yyyy/MM/dd HH:mm";
+        String YYYY_MM_DD_HH_MM_SS_SLASH = "yyyy/MM/dd HH:mm:ss";
         String DD_MM_YYYY_HH_MM_SLASH = "dd/MM/yyyy HH:mm";
         String HH_MM = "HHmm";
     }

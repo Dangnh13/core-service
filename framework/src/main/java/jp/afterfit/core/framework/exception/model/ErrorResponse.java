@@ -1,6 +1,5 @@
 package jp.afterfit.core.framework.exception.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
@@ -11,8 +10,6 @@ import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpStatus;
 
-import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -23,9 +20,7 @@ import java.util.ResourceBundle;
  * Error Response data when exception handling
  */
 @Data
-public class ErrorResponse implements Serializable {
-
-    private static final long serialVersionUID = -5214318729027027493L;
+public class ErrorResponse extends BasicErrorResponse {
 
     private static transient ResourceBundle bundle = null;
 
@@ -33,17 +28,6 @@ public class ErrorResponse implements Serializable {
 
     @JsonIgnore
     private HttpStatus httpStatus;
-
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
-    @ApiModelProperty(value = "Time of the error")
-    private LocalDateTime timestamp;
-
-    @ApiModelProperty(value = "Message error")
-    private String message;
-
-    @JsonProperty(value = "error_codes")
-    @ApiModelProperty(value = "Error codes")
-    private List<String> errorCodes;
 
     @JsonProperty(value = "validation_errors")
     @ApiModelProperty(value = "Validation Errors")
@@ -56,20 +40,14 @@ public class ErrorResponse implements Serializable {
             ERROR_MSG_HTTP_STATUS_REQUIRED = ResourceBundleUtil.getMessage(bundle, "error.message.common.http.status.required");
     }
 
-    private ErrorResponse() {
-        timestamp = LocalDateTime.now();
-    }
-
     private ErrorResponse(HttpStatus httpStatus, String message, List<String> errorCodes, Map<String, Object> validationErrors) {
         this(httpStatus, message, errorCodes);
         this.validationErrors = validationErrors;
     }
 
     private ErrorResponse(HttpStatus httpStatus, String message, List<String> errorCodes) {
-        this();
+        super(message, errorCodes);
         this.httpStatus = httpStatus;
-        this.message = message;
-        this.errorCodes = errorCodes;
     }
 
     public static ErrorResponse of(HttpStatus httpStatus, String message, List<String> errorCodes) {
@@ -88,6 +66,11 @@ public class ErrorResponse implements Serializable {
         String errMsg = StringUtils.defaultIfBlank(message, StringUtils.EMPTY);
 
         return new ErrorResponse(httpStatus, errMsg, errorCodes, validationErrors);
+    }
+
+    public static BasicErrorResponse of(String message, List<String> errorCodes) {
+        String errMsg = StringUtils.defaultIfBlank(message, StringUtils.EMPTY);
+        return new BasicErrorResponse(errMsg, errorCodes);
     }
 
     @Data

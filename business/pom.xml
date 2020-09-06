@@ -24,5 +24,6 @@
             <groupId>jp.afterfit</groupId>
             <artifactId>framework</artifactId>
         </dependency>
+
     </dependencies>
 </project>

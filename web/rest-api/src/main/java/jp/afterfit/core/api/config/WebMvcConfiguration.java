@@ -1,12 +1,12 @@
 package jp.afterfit.core.api.config;
 
+import jp.afterfit.core.framework.component.MessageService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
-import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 
 import java.util.Locale;
 
@@ -23,17 +23,11 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
     //                                                                ==========
 
     @Bean
-    public LocaleResolver localeResolver() {
-        final CookieLocaleResolver cookieLocaleResolver = new CookieLocaleResolver();
-        cookieLocaleResolver.setDefaultLocale(Locale.JAPAN);
-        return cookieLocaleResolver;
+    public MessageService messageService(final MessageSource messageSource) {
+        return new MessageService(messageSource, Locale.JAPANESE);
     }
 
-    /*@Bean
-	public MessageSource messageSource() {
-		return new ReloadableResourceBundleMessageSource();
-	}
-
+  /*
 	@Bean
 	public LocalValidatorFactoryBean localValidatorFactoryBean() {
 		LocalValidatorFactoryBean localValidatorFactoryBean = new LocalValidatorFactoryBean();
