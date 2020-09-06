@@ -1,11 +1,11 @@
 package jp.afterfit.core.persistence.dao.generator;
 
 import java.util.List;
+import jp.afterfit.core.domain.entity.generator.RequestComment;
+import jp.afterfit.core.domain.entity.generator.RequestCommentCriteria;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
-import jp.afterfit.core.domain.entity.generator.RequestComment;
-import jp.afterfit.core.domain.entity.generator.RequestCommentCriteria;
 
 @Mapper
 public interface RequestCommentMapper {

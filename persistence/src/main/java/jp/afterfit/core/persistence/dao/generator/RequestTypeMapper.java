@@ -1,11 +1,11 @@
 package jp.afterfit.core.persistence.dao.generator;
 
 import java.util.List;
+import jp.afterfit.core.domain.entity.generator.RequestType;
+import jp.afterfit.core.domain.entity.generator.RequestTypeCriteria;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
-import jp.afterfit.core.domain.entity.generator.RequestType;
-import jp.afterfit.core.domain.entity.generator.RequestTypeCriteria;
 
 @Mapper
 public interface RequestTypeMapper {

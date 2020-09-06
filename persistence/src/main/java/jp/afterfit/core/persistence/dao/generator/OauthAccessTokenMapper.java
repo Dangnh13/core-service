@@ -1,12 +1,12 @@
 package jp.afterfit.core.persistence.dao.generator;
 
 import java.util.List;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.session.RowBounds;
 import jp.afterfit.core.domain.entity.generator.OauthAccessToken;
 import jp.afterfit.core.domain.entity.generator.OauthAccessTokenCriteria;
 import jp.afterfit.core.domain.entity.generator.OauthAccessTokenWithBLOBs;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.session.RowBounds;
 
 @Mapper
 public interface OauthAccessTokenMapper {
