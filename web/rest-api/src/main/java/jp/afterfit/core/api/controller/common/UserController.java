@@ -6,7 +6,6 @@ import jp.afterfit.core.api.controller.AbstractBaseController;
 import jp.afterfit.core.business.service.IUserService;
 import jp.afterfit.core.dto.common.user.SearchUserRequest;
 import jp.afterfit.core.dto.common.user.SearchUserResponse;
-import jp.afterfit.core.framework.constant.Router;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;

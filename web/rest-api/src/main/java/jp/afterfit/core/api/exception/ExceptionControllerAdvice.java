@@ -9,8 +9,14 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 
 @ControllerAdvice
 public class ExceptionControllerAdvice extends DefaultRestExceptionControllerAdvice {
-    public ExceptionControllerAdvice(IExceptionHandler<ServiceException> serviceExceptionHandler, IExceptionHandler<BindException> bindExceptionHandler, IExceptionHandler<MethodArgumentNotValidException> methodArgumentNotValidExceptionIExceptionHandler) {
-        super(serviceExceptionHandler, bindExceptionHandler, methodArgumentNotValidExceptionIExceptionHandler);
-    }
 
+    public ExceptionControllerAdvice(IExceptionHandler<ServiceException> serviceExceptionHandler,
+                                     IExceptionHandler<BindException> bindExceptionHandler,
+                                     IExceptionHandler<MethodArgumentNotValidException> methodArgumentNotValidExceptionIExceptionHandler,
+                                     IExceptionHandler<Exception> unknownExceptionHandler) {
+        super(serviceExceptionHandler,
+                bindExceptionHandler,
+                methodArgumentNotValidExceptionIExceptionHandler,
+                unknownExceptionHandler);
+    }
 }

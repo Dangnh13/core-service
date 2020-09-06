@@ -15,6 +15,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * Setting Access token to MetadataContextHolder for using later
+ */
 @Component
 @Order(value = Ordered.HIGHEST_PRECEDENCE)
 public class SaveHeaderFilter extends OncePerRequestFilter {

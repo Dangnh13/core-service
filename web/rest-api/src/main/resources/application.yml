@@ -34,11 +34,6 @@ spring:
       # Optimize max connection pool: amount = ((core_count * 2) + effective_spindle_count)
       maximum-pool-size: 10
 
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          jwk-set-uri: https://www.googleapis.com/oauth2/v3/certs
 #*******************************************************************************
 #                           Config mybatis
 #******************************************************************************/
@@ -64,3 +59,16 @@ mybatis:
 pagehelper:
   auto-dialect: true
   support-methods-arguments: true
+
+  #*******************************************************************************
+  #                           Google Oauth
+  #******************************************************************************/
+service:
+  security:
+    google-oauth:
+      resource-server:
+        project-id: mockproject-288204
+        client-id: 910677747576-0d1lfgbjh2drjgq400j812qda6ij49vm.apps.googleusercontent.com
+        jwk-set-uri: https://www.googleapis.com/oauth2/v3/certs
+        issuer-uri: accounts.google.com
+        hd: afterfit.com

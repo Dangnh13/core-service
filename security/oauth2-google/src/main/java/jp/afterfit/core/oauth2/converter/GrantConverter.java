@@ -7,14 +7,14 @@ import org.springframework.security.oauth2.jwt.Jwt;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.stream.Collectors;
 
 public class GrantConverter implements Converter<Jwt, Collection<GrantedAuthority>> {
     public Collection<GrantedAuthority> convert(Jwt jwt) {
-        Collection<?> authorities = (Collection<?>)
+       /* Collection<?> authorities = (Collection<?>)
                 jwt.getClaims().getOrDefault("mycustomclaim", Collections.emptyList());
-
+*/
+        // TODO
         Collection<GrantedAuthority> grantedAuthorities = new ArrayList<>();
         grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_USER"));
         return grantedAuthorities.stream()

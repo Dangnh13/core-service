@@ -1,12 +1,13 @@
 package jp.afterfit.core.oauth2.config;
 
+import jp.afterfit.core.oauth2.config.properties.GoogleOAuth2ResourceServerProperties;
 import jp.afterfit.core.oauth2.converter.ClaimSetAdapterConverter;
 import jp.afterfit.core.oauth2.converter.GrantConverter;
 import jp.afterfit.core.oauth2.filter.AddHeaderExchangeFilter;
 import jp.afterfit.core.oauth2.validation.AudienceValidator;
+import jp.afterfit.core.oauth2.validation.GSuiteDomainValidator;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.autoconfigure.security.oauth2.resource.OAuth2ResourceServerProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
@@ -34,32 +35,37 @@ import org.springframework.web.reactive.function.client.WebClient;
 @RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final OAuth2ResourceServerProperties oAuth2ResourceServerProperties;
+    private static final String ID_TOKEN = "id_token";
+
+    private final GoogleOAuth2ResourceServerProperties oAuth2ResourceServerProperties;
 
     @Bean
     public JwtDecoder jwtDecoder() {
-        NimbusJwtDecoder jwtDecoder = NimbusJwtDecoder.withJwkSetUri(oAuth2ResourceServerProperties.getJwt().getJwkSetUri()).build();
+        NimbusJwtDecoder jwtDecoder = NimbusJwtDecoder.withJwkSetUri(oAuth2ResourceServerProperties.getJwkSetUri()).build();
         jwtDecoder.setClaimSetConverter(new ClaimSetAdapterConverter());
 
         OAuth2TokenValidator<Jwt> timestampValidator = new JwtTimestampValidator();
-        OAuth2TokenValidator<Jwt> audienceValidator = new AudienceValidator(oAuth2ResourceServerProperties);
-        OAuth2TokenValidator<Jwt> issuerValidator = new JwtIssuerValidator("accounts.google.com");
+        OAuth2TokenValidator<Jwt> audienceValidator = new AudienceValidator(oAuth2ResourceServerProperties.getClientId());
+        OAuth2TokenValidator<Jwt> issuerValidator = new JwtIssuerValidator(oAuth2ResourceServerProperties.getIssuerUri());
+        OAuth2TokenValidator<Jwt> hdValidator = new GSuiteDomainValidator(oAuth2ResourceServerProperties.getHd());
 
-        OAuth2TokenValidator<Jwt> withClockSkew = new DelegatingOAuth2TokenValidator<>(
+        OAuth2TokenValidator<Jwt> tokenValidator = new DelegatingOAuth2TokenValidator<>(
                 timestampValidator,
                 audienceValidator,
-                issuerValidator);
+                issuerValidator,
+                hdValidator);
 
-        jwtDecoder.setJwtValidator(withClockSkew);
+        jwtDecoder.setJwtValidator(tokenValidator);
 
         return jwtDecoder;
     }
 
-    @Bean
-    public WebClient rest() {
-        return WebClient.builder()
-                .filter(new AddHeaderExchangeFilter())
-                .build();
+    public Converter<Jwt, AbstractAuthenticationToken> grantedAuthoritiesExtractor() {
+        JwtAuthenticationConverter jwtAuthenticationConverter =
+                new JwtAuthenticationConverter();
+        jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter
+                (new GrantConverter());
+        return jwtAuthenticationConverter;
     }
 
     @Bean
@@ -67,12 +73,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new PreAuthenticatedEntryPoint();
     }
 
-    Converter<Jwt, AbstractAuthenticationToken> grantedAuthoritiesExtractor() {
-        JwtAuthenticationConverter jwtAuthenticationConverter =
-                new JwtAuthenticationConverter();
-        jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter
-                (new GrantConverter());
-        return jwtAuthenticationConverter;
+    @Bean
+    public WebClient rest() {
+        return WebClient.builder()
+                .filter(new AddHeaderExchangeFilter())
+                .build();
     }
 
     @Override
@@ -95,22 +100,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .oauth2ResourceServer(
                         oauth2ResourceServer ->
                                 oauth2ResourceServer
-                                        .jwt(jwt ->
-                                                jwt.decoder(jwtDecoder())
-
-                                                        .jwtAuthenticationConverter(grantedAuthoritiesExtractor())
-
-                                        )
-                                        .bearerTokenResolver(new HeaderBearerTokenResolver("id_token"))
-                                        .authenticationEntryPoint(authenticationEntryPoint())
-                    /*    .accessDeniedHandler(new AccessDeniedHandler() {
-                                            @Override
-                                            public void handle(HttpServletRequest request, HttpServletResponse response, org.springframework.security.access.AccessDeniedException accessDeniedException) throws IOException, ServletException {
-                                                System.out.println("I am here now!!!");
-                                            }
-                                        })*/
-
-                )
+                                        .jwt(jwt -> jwt.decoder(jwtDecoder())
+                                                .jwtAuthenticationConverter(grantedAuthoritiesExtractor()))
+                                        .bearerTokenResolver(new HeaderBearerTokenResolver(ID_TOKEN))
+                                        .authenticationEntryPoint(authenticationEntryPoint()))
                 .sessionManagement(sessionManagement ->
                         sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
     }

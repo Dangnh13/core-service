@@ -7,17 +7,18 @@ import java.util.Collections;
 import java.util.Map;
 
 /**
- * CRUD converter
+ * CRUD claim converter
  */
 public class ClaimSetAdapterConverter implements Converter<Map<String, Object>, Map<String, Object>> {
+
     private final MappedJwtClaimSetConverter delegate =
             MappedJwtClaimSetConverter.withDefaults(Collections.emptyMap());
 
     public Map<String, Object> convert(Map<String, Object> claims) {
         Map<String, Object> convertedClaims = this.delegate.convert(claims);
 
-        String username = (String) convertedClaims.get("user_name");
-        convertedClaims.put("custom", username);
+        /*String username = (String) convertedClaims.get("user_name");
+        convertedClaims.put("custom", username);*/
 
         return convertedClaims;
     }
