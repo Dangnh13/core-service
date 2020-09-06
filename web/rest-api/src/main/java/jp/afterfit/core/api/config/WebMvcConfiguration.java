@@ -27,15 +27,6 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
         return new MessageService(messageSource, Locale.JAPANESE);
     }
 
-  /*
-	@Bean
-	public LocalValidatorFactoryBean localValidatorFactoryBean() {
-		LocalValidatorFactoryBean localValidatorFactoryBean = new LocalValidatorFactoryBean();
-		localValidatorFactoryBean.setValidationMessageSource(messageSource());
-		return localValidatorFactoryBean;
-	}*/
-
-
     // =========================================================================
     //                                                                Public method
     //                                                                ==========

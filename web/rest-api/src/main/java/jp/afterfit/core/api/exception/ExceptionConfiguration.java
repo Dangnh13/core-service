@@ -4,6 +4,7 @@ import jp.afterfit.core.framework.exception.handler.BindExceptionHandler;
 import jp.afterfit.core.framework.exception.handler.IExceptionHandler;
 import jp.afterfit.core.framework.exception.handler.MethodArgumentNotValidExceptionHandler;
 import jp.afterfit.core.framework.exception.handler.ServiceExceptionHandler;
+import jp.afterfit.core.framework.exception.handler.UnknownExceptionHandler;
 import jp.afterfit.core.framework.exception.type.ServiceException;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
@@ -28,6 +29,11 @@ public class ExceptionConfiguration {
     @Bean
     public IExceptionHandler<MethodArgumentNotValidException> methodArgumentNotValidExceptionIExceptionHandler() {
         return new MethodArgumentNotValidExceptionHandler();
+    }
+
+    @Bean
+    public IExceptionHandler<Exception> unknownExceptionHandler() {
+        return new UnknownExceptionHandler();
     }
 
     @Bean

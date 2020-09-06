@@ -94,6 +94,7 @@ public enum ErrorCode {
 	EMSGSIZE("EMSGSIZE", "errorMessage too long"),
 	EPROTOTYPE("EPROTOTYPE", "Protocol wrong type for socket"),
 	ENOPROTOOPT("ENOPROTOOPT", "Protocol not available"),
+	EMETHODNOSUPPORT("EMETHODNOSUPPORT", "Method not supported"),
 	EPROTONOSUPPORT("EPROTONOSUPPORT", "Protocol not supported"),
 	ESOCKTNOSUPPORT("ESOCKTNOSUPPORT", "Socket type not supported"),
 	EOPNOTSUPP("EOPNOTSUPP", "Operation not supported on transport endpoint"),

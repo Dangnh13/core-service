@@ -1,9 +1,12 @@
 package jp.afterfit.core.framework.exception.handler;
 
+import jp.afterfit.core.framework.exception.model.ErrorCode;
 import jp.afterfit.core.framework.exception.model.ErrorResponse;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.http.HttpStatus;
+
+import java.util.Arrays;
 
 /**
  * Interface for system;s exceptions
@@ -21,7 +24,9 @@ public interface IExceptionHandler<T extends Exception> {
      * @return error response {@link ErrorResponse}
      */
     default ErrorResponse handle(T exception) {
-        return ErrorResponse.of(HttpStatus.INTERNAL_SERVER_ERROR, exception.getMessage(), null);
+        return ErrorResponse.of(HttpStatus.INTERNAL_SERVER_ERROR,
+                exception.getMessage(),
+                Arrays.asList(ErrorCode.EUNKNOWN.getErrorCode()));
     }
 
 }
