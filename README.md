@@ -17,12 +17,6 @@
 |                |`Mybatis generate maven plugin`|1.4.0   
 |                |`Mybatis schema migration maven plugin`|1.1.3  
 
-### Module dependencies 
-![Module dependencies](assets/images/rest-api-modules-dependencies.png?raw=true)
-
-### DTO
-![DTO](assets/images/DTO.png?raw=true)
-
 ##### How to call restful API
 
 ![DTO](assets/images/call-api.png?raw=true)
